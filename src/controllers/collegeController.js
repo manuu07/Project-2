@@ -11,7 +11,9 @@ const createCollege = async function (req, res) {
       }
 
       const { name, fullName, logoLink } = data
-      const nameInLowerCase = data.name.toLowerCase()
+
+      // const nameInLowerCase = data.name.toLowerCase()
+
 
       //checking required field is mandatory
       if (!name) {
@@ -20,6 +22,9 @@ const createCollege = async function (req, res) {
       if (!isEmpty(name)){ 
       return res.status(400).send({ status: false, message: "Name can't be empty" })
       }
+      
+      const nameInLowerCase = data.name.toLowerCase()
+
       if (!fullName) {
          return res.status(400).send({ status: false, message: "Please provide fullName" })
       }
@@ -54,20 +59,18 @@ const createCollege = async function (req, res) {
       }
 
       // checking name unique
-      const findname = await collegeModel.findOne({ name: nameInLowerCase })
-      if (findname) {
-         return res.status(400).send({ status: false, message: "Name should be unique" });
-      }
-      else {
-
-         const college = await collegeModel.create({
-            name:nameInLowerCase,
-            fullName:data.fullName,
-            logoLink:data.logoLink,
-            isDeleted:data.isDeleted
-        });
-         return res.status(201).send({status: true,data:college  })
-      }
+    const findname =await collegeModel.findOne({name:nameInLowerCase});
+    if(findname){
+      return res.status(400).send({status:false,message:"name will be unique"})
+    }else{
+      const college = await collegeModel.create({
+         name:nameInLowerCase,
+         fullName:data.fullName,
+         logoLink:data.logoLink,
+         isDeleted:data.isDeleted
+      })
+      return res.status(201).send({status:true,data:college})
+    }
    }
    catch (err) {
       return res.status(500).send({ status: false, message: err.message })
