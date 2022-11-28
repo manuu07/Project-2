@@ -1,12 +1,15 @@
 const express=require('express');
 const bodyParser=require('body-parser');
-const { default: mongoose }=require('mongoose');
+const mongoose =require('mongoose');
+const multer=require('multer')
 const route=require('./routes/route.js');
 
 const app=express();
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
+
+app.use(multer().any())
 
 
 mongoose.connect("mongodb+srv://project2interngroup4:Group4@cluster0.eo7nhf5.mongodb.net/Project2", {
@@ -18,7 +21,7 @@ mongoose.connect("mongodb+srv://project2interngroup4:Group4@cluster0.eo7nhf5.mon
 
 app.use('/',route);
 
-app.listen(process.env.PORT || 3000, function () {
-    console.log('Express app running on port ' + (process.env.PORT || 3000))
+app.listen(process.env.PORT || 3001, function () {
+    console.log('Express app running on port ' + (process.env.PORT || 3001))
 });
 
