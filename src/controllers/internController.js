@@ -3,7 +3,11 @@ const collegeModel = require("../models/collegeModel");
 const { isEmpty, validEmail, validName, validMobile, } = require("../validator/validation");
 
 const createIntern = async function (req, res) {
+<<<<<<< HEAD
   res.setHeader('Access-Control-Allow-Origin', '*')
+=======
+  res.setHeader('Access-Control-Allow-Origin','*')
+>>>>>>> aca0529213dcacf336d3555415ad763505653851
   try {
     const data=req.body
     if (Object.keys(data).length == 0)

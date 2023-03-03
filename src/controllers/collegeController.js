@@ -19,6 +19,10 @@ const createCollege = async function (req, res) {
       if (!isEmpty(name)){ 
       return res.status(400).send({ status: false, message: "Name can't be empty" })
       }
+<<<<<<< HEAD
+=======
+      
+>>>>>>> aca0529213dcacf336d3555415ad763505653851
       const nameInLowerCase = data.name.toLowerCase()
 
       if (!fullName) {
@@ -40,7 +44,11 @@ const createCollege = async function (req, res) {
       }
       if (!validName(fullName)) {
          return res.status(400).send({ status: false, message: "fullName should be in alphabet type" })
+<<<<<<< HEAD
        }
+=======
+      }
+>>>>>>> aca0529213dcacf336d3555415ad763505653851
 
       //checking logo format
       if (!validLogo(logoLink)) {
@@ -54,20 +62,18 @@ const createCollege = async function (req, res) {
       }
 
       // checking name unique
-      const findname = await collegeModel.findOne({ name: nameInLowerCase })
-      if (findname) {
-         return res.status(400).send({ status: false, message: "Name should be unique" });
-      }
-      else {
-
-         const college = await collegeModel.create({
-            name:nameInLowerCase,
-            fullName:data.fullName,
-            logoLink:data.logoLink,
-            isDeleted:data.isDeleted
-        });
-         return res.status(201).send({status: true,data:college  })
-      }
+    const findname =await collegeModel.findOne({name:nameInLowerCase});
+    if(findname){
+      return res.status(400).send({status:false,message:"name will be unique"})
+    }else{
+      const college = await collegeModel.create({
+         name:nameInLowerCase,
+         fullName:data.fullName,
+         logoLink:data.logoLink,
+         isDeleted:data.isDeleted
+      })
+      return res.status(201).send({status:true,data:college})
+    }
    }
    catch (err) {
       return res.status(500).send({ status: false, message: err.message })
@@ -76,13 +82,15 @@ const createCollege = async function (req, res) {
 
 
 const getCollegeDetail = async function (req, res) {
+<<<<<<< HEAD
    res.setHeader('Access-Control-Allow-Origin', '*') 
+=======
+res.setHeader('Access-Control-Allow-Origin','*')
+
+>>>>>>> aca0529213dcacf336d3555415ad763505653851
    try {
-
       const collegeName = req.query.collegeName
-      
-
-      if (!collegeName) {
+         if (!collegeName) {
          return res.status(400).send({ status: false, message: "College Name is required in query " })
       }
       if (!validName(collegeName)) {
@@ -97,6 +105,7 @@ const getCollegeDetail = async function (req, res) {
       }
 
       //finding Interns
+<<<<<<< HEAD
       const findIntern = await internModel.find({collegeId: findCollege.id , isDeleted : false }).select({name :1 ,email : 1 , mobile : 1})
        
       if (!findIntern)
@@ -109,6 +118,21 @@ const getCollegeDetail = async function (req, res) {
           interns : findIntern
          }}
       )
+=======
+      const findIntern = await internModel.find({ collegeId: findCollege._id, isDeleted: false }).select({ name: 1, email: 1, mobile: 1 })
+      if (findIntern.length==0) {
+         return res.status(200).send({ status: false, message: "Interns not found" })
+      }
+      return res.status(200).send({
+         status: true,
+         data: {
+            name: findCollege.name,
+            fullName: findCollege.fullName,
+            logoLink: findCollege.logoLink,
+            interns: findIntern
+         }
+      })
+>>>>>>> aca0529213dcacf336d3555415ad763505653851
    }
    catch (err) {
       return res.status(500).send({ status: false, message: err.message })

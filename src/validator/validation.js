@@ -5,8 +5,14 @@ const isEmpty = function(value){
 }
 
 const validEmail=function(email){
+<<<<<<< HEAD
     const emailRegex= /^[\w-\.]+@([\w-]+\.)+[\w-][a-z]{1,4}$/
   return emailRegex.test(email)
+=======
+    // const emailRegex=/\S+@\S+\.\S+/
+     const emailRegex=/^[\w-\.]+@([\w-]+\.)+[\w-][a-z]{1,4}$/
+    return emailRegex.test(email)
+>>>>>>> aca0529213dcacf336d3555415ad763505653851
 }
 
 const validName=function(name){
